@@ -26,11 +26,10 @@ export const useRaceStore = defineStore('race', () => {
 
   const currentRoundDetails = computed(() => raceSchedule.value[currentRoundIndex.value])
   const currentRoundParticipants = computed(() => currentRoundDetails.value?.participants ?? [])
-  const totalParticipantsInCurrentRound = computed(() => currentRoundParticipants.value?.length ?? 0)
 
   function initCurrentRoundProgress() {
-    currentRoundProgress.value = Array(totalParticipantsInCurrentRound.value).fill(0)
-    currentRoundFinishTicks.value = Array(totalParticipantsInCurrentRound.value).fill(null)
+    currentRoundProgress.value = Array(raceConfig.value.participantsPerRound).fill(0)
+    currentRoundFinishTicks.value = Array(raceConfig.value.participantsPerRound).fill(null)
   }
 
   watch(participantsById, initCurrentRoundProgress, { immediate: true })
