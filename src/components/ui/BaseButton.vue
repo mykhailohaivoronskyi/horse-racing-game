@@ -3,7 +3,7 @@
     class="base-button"
     :class="[props.variant && `base-button--${props.variant}`]"
     :disabled="props.disabled"
-    @click="$emit('click')"
+    @click="emit('click')"
   >
     <slot />
   </button>
@@ -15,7 +15,7 @@ const props = defineProps<{
   disabled?: boolean
 }>()
 
-defineEmits(['click'])
+const emit = defineEmits(['click'])
 </script>
 
 <style lang="scss" scoped>

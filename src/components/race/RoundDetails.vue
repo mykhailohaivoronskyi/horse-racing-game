@@ -1,5 +1,6 @@
 <template>
   <div
+    data-testid="round-details"
     class="round-details"
     :class="{
       'round-details--active': props.active,
@@ -30,6 +31,7 @@
 <script setup lang="ts">
 import type { RoundDetails } from '@/types/race'
 import { getRoundTitle } from '@/utils/race'
+
 import BaseTable from '../ui/BaseTable.vue'
 
 const props = defineProps<{

@@ -55,7 +55,7 @@ describe('race store tests', () => {
   it('isRaceFinished becomes true when all round results have been saved', () => {
     const store = useRaceStore()
     const RACE_CONFIG: RaceConfig = {
-      totalParticipants: 3,
+      totalParticipants: 2,
       totalRounds: 2,
       participantsPerRound: 10,
       title: 'Horse',
@@ -68,11 +68,11 @@ describe('race store tests', () => {
     expect(store.isRaceFinished).toBe(false)
 
     // Push results for the first round
-    store.raceResults.push([{ participantId: 1, finishTick: 100 }])
+    store.raceResults.push([{ participantId: 1, finishTick: 100 }, { participantId: 2, finishTick: 100 }])
     expect(store.isRaceFinished).toBe(false)
 
     // Push results for the second (final) round
-    store.raceResults.push([{ participantId: 2, finishTick: 200 }])
+    store.raceResults.push([{ participantId: 1, finishTick: 200 }, { participantId: 2, finishTick: 200 }])
     expect(store.isRaceFinished).toBe(true)
   })
 })
