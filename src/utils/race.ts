@@ -7,6 +7,9 @@ export function calculateParticipantStep(
   delta: number,
   distance: number
 ): number {
+  if (!participant) {
+    return 0
+  }
   const SPEED_SCALE = 3;
   const baseSpeed = getRandomInt(10, 20);
   const bonus = (participant.condition / 100) * 10;
@@ -63,4 +66,8 @@ export function generateSchedule(
   }
 
   return rounds
+}
+
+export function isRoundFinished(currentRoundFinishTicks: Array<number | null>) {
+  return currentRoundFinishTicks.every((finishTick) => finishTick !== null)
 }

@@ -8,6 +8,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useRaceStore } from '@/stores/race'
+
 import RaceControls from './RaceControls.vue'
 
 const raceStore = useRaceStore()

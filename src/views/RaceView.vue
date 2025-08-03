@@ -19,12 +19,14 @@
       </template>
     </RaceTrack>
     <RaceRoundsInfo
+      data-testid="race-schedule"
       class="race-view__schedule"
       title="Program"
       :race-round-details="raceSchedule"
       :activeRoundIndex="currentRoundIndex"
     />
     <RaceRoundsInfo
+      data-testid="race-results"
       class="race-view__results"
       title="Results"
       :race-round-details="displayableRaceResults"

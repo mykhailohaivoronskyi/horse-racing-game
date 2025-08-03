@@ -19,6 +19,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useRaceStore } from '@/stores/race'
+
 import BaseButton from '../ui/BaseButton.vue'
 
 const raceStore = useRaceStore()

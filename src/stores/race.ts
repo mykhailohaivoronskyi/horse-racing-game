@@ -4,7 +4,7 @@ import { defineStore } from 'pinia'
 import type { RaceConfig, RaceParticipantsById, RaceResults, RaceRoundsDetails } from '@/types/race';
 import { generateHorseName } from '@/utils/horseGenerator';
 import { getRandomInt, getUniqueColor } from '@/utils/common';
-import { calculateParticipantStep, generateParticipants, generateSchedule } from '@/utils/race';
+import { calculateParticipantStep, generateParticipants, generateSchedule, isRoundFinished } from '@/utils/race';
 import { useRaceEngine } from '@/composables/useRaceEngine';
 
 export const useRaceStore = defineStore('race', () => {
@@ -48,8 +48,23 @@ export const useRaceStore = defineStore('race', () => {
     )
   }
 
+  function setRaceConfig(raceConfigData: RaceConfig) {
+    if (raceConfigData.participantsPerRound > raceConfigData.totalParticipants) {
+      console.warn(
+        `participantsPerRound (${raceConfigData.participantsPerRound}) > totalParticipants (${raceConfigData.totalParticipants}), clamping to totalParticipants.`
+      );
+      raceConfig.value = {
+        ...raceConfigData,
+        participantsPerRound: raceConfigData.totalParticipants
+      }
+      return
+    }
+
+    raceConfig.value = raceConfigData;
+  }
+
   function initRace(raceConfigData: RaceConfig) {
-    raceConfig.value = raceConfigData
+    setRaceConfig(raceConfigData)
     const { totalParticipants } = raceConfig.value
     participantsById.value = generateParticipants(
       totalParticipants,
@@ -65,7 +80,8 @@ export const useRaceStore = defineStore('race', () => {
   )
 
   const isRaceFinished = computed(
-    () => raceResults.value.length === raceConfig.value.totalRounds
+    () => raceResults.value.length === raceConfig.value.totalRounds &&
+      raceResults.value.every(roundResuls => roundResuls.length === raceConfig.value.participantsPerRound && isRoundFinished(roundResuls.map(({ finishTick }) => finishTick)))
   )
 
 
@@ -109,7 +125,7 @@ export const useRaceStore = defineStore('race', () => {
   }
 
   const isCurrentRoundFinished = computed(
-    () => currentRoundFinishTicks.value.every((finishTick) => finishTick !== null)
+    () => isRoundFinished(currentRoundFinishTicks.value)
   )
   watch(isCurrentRoundFinished, (newVal) => {
     if (!newVal) {

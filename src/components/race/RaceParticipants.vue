@@ -26,9 +26,10 @@
 </template>
 
 <script setup lang="ts">
-import { useRaceStore } from '@/stores/race'
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
+
+import { useRaceStore } from '@/stores/race'
 import BaseTable from '../ui/BaseTable.vue'
 import BaseCard from '../ui/BaseCard.vue'
 

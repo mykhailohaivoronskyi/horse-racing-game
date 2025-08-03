@@ -1,4 +1,8 @@
 {
+  "compilerOptions": {
+    "noEmit": true,
+    "allowImportingTsExtensions": true
+  },
   "extends": "@tsconfig/node22/tsconfig.json",
   "include": ["./**/*"]
 }

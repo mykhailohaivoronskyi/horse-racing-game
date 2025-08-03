@@ -13,9 +13,10 @@
 <script setup lang="ts">
 import { nextTick, useTemplateRef, watch } from 'vue'
 
-import RoundDetails from './RoundDetails.vue'
 import type { RaceRoundsDetails } from '@/types/race'
+
 import BaseCard from '../ui/BaseCard.vue'
+import RoundDetails from './RoundDetails.vue'
 
 const props = defineProps<{
   title: string

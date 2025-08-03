@@ -5,14 +5,19 @@ export function useRaceEngine(
 ) {
   const isRunning = ref(false)
   let frameId: number | null = null
-  let lastFrameTime = performance.now()
+  let lastFrameTime = 0
 
   function tick(now: number) {
-    const delta = now - lastFrameTime
-    lastFrameTime = now
-    frameHandler(delta, now)
-    if (isRunning.value) {
-      frameId = requestAnimationFrame(tick)
+    try {
+      const delta = now - lastFrameTime
+      lastFrameTime = now
+      frameHandler(delta, now)
+      if (isRunning.value) {
+        frameId = requestAnimationFrame(tick)
+      }
+    } catch (error) {
+      console.error('Error during executing tick', error)
+      pause()
     }
   }
 
@@ -37,5 +42,5 @@ export function useRaceEngine(
     pause()
   })
 
-  return { isRunning, start, pause, tick }
+  return { isRunning, start, pause }
 }
